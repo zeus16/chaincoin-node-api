@@ -1,21 +1,21 @@
 {
-  "name": "bitcoin-node-api",
+  "name": "chaincoin-node-api",
 	"author": "Niel de la Rouviere",
-	"description": "Bitcoin-Node-Api is an Express middleware plugin that exposes URLs for quick development and interfacing with a bitcoind Bitcoin wallet.",
-  "version": "0.1.1",
+	"description": "chaincoin-node-api is an Express middleware plugin that exposes URLs for quick development and interfacing with a chaincoind chaincoin wallet.",
+  "version": "1.0.0",
 	"main": "lib/api.js",
 	"repository" : {
 		"type": "git",
-		"url": "git@github.com:nieldlr/Bitcoin-Node-Api.git"
+		"url": "https://github.com/suprnurd/chaincoin-node-api.git"
 	},
 
 	"dependencies":{
 		"express": "3.3.x",
-		"bitcoin": "1.7.0"
+		"node-chaincoin": "1.0.2"
 	},
 
 	"keywords": [
-    "bitcoin",
+    "chaincoin",
     "node",
     "api"
   ]

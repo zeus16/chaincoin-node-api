@@ -1,6 +1,6 @@
-# bitcoin-node-api
+# chaincoin-node-api
 
-Bitcoin-Node-Api is an Express middleware plugin that easily exposes a URL structure for interfacing with a bitcoind Bitcoin wallet.
+chaincoin-node-api is an Express middleware plugin that easily exposes a URL structure for interfacing with a chaincoind Chaincoin wallet.
 
 NB: The middleware is experimental at present. Certain JSON-RPC methods are not supported yet and/or experimental. These are methods with more complex parameters that do not fit easily into a query string:
 
@@ -13,12 +13,12 @@ NB: The middleware is experimental at present. Certain JSON-RPC methods are not 
 - signrawtransaction
 - submitblock
 
-These methods will be added in the future. If there any other problems with the other methods, please report the bugs.
+These methods may be added in the future. If there any other problems with the other methods, please report the bugs.
 
 ## Install
 
 ```javascript
-npm install bitcoin-node-api
+npm install chaincoin-node-api
 ```
 
 ## How to use
@@ -26,22 +26,22 @@ npm install bitcoin-node-api
 ### Node.js
 
 ```javascript
-var bitcoinapi = require('bitcoin-node-api');
+var chaincoinapi = require('chaincoin-node-api');
 var express = require('express');
 var app = express();
 
-//Username and password relate to those set in the bitcoin.conf file
+//Username and password relate to those set in the chaincoin.conf file
 
 var wallet = {
   host: 'localhost',
-  port: 8332,
-  user: 'username',
-  pass: 'password'
+  port: 11995,
+  user: 'rpcuser',
+  pass: 'rpcpassword'
 };
 
-bitcoinapi.setWalletDetails(wallet);
-bitcoinapi.setAccess('default-safe'); //Access control
-app.use('/bitcoin/api', bitcoinapi.app); //Bind the middleware to any chosen url
+chaincoinapi.setWalletDetails(wallet);
+chaincoinapi.setAccess('default-safe'); //Access control
+app.use('/chaincoin/api', chaincoinapi.app); //Bind the middleware to any chosen url
 
 app.listen(3000);
 ```
@@ -54,33 +54,35 @@ Just add the method name after the binded url.
 
 For example:
 
-* http://localhost:5000/bitcoin/api/getinfo
+* http://localhost:5000/chaincoin/api/getinfo
 
 This returns data exactly as would be expected from the JSON-RPC api.
 
 ```javascript
 {
-  "version": 80300,
-  "protocolversion": 70001,
-  "walletversion": 60000,
-  "balance": 4.3222,
-  "blocks": 245645,
-  "timeoffset": -2,
-  "connections": 8,
-  "proxy": "",
-  "difficulty": 21335329.113983,
-  "testnet": false,
-  "keypoololdest": 1368414896,
-  "keypoolsize": 101,
-  "paytxfee": 0.0001,
-  "unlocked_until": 0,
-  "errors": ""
+  "version" : 90301,
+  "protocolversion" : 70003,
+  "walletversion" : 61000,
+  "balance" : 0000.00000000,
+  "darksend_balance" : 0.00000000,
+  "blocks" : 1233286,
+  "timeoffset" : 0,
+  "connections" : 8,
+  "proxy" : "",
+  "difficulty" : 183.73427079,
+  "testnet" : false,
+  "keypoololdest" : 1504388518,
+  "keypoolsize" : 1000,
+  "unlocked_until" : 0,
+  "paytxfee" : 0.00000000,
+  "relayfee" : 0.00001000,
+  "errors" : ""
 }
 ```
 
 Parameters are sent via a query string:
 
-* http://localhost:3000/bitcoin/api/gettransaction?txid=d6c7e35ff9c9623208c22ee37a118ad523ae6c2d137d10053739cb03dbac62e0
+* http://localhost:3000/chaincoin/api/gettransaction?txid=d6c7e35ff9c9623208c22ee37a118ad523ae6c2d137d10053739cb03dbac62e0
 
 ```javascript
 {
@@ -103,18 +105,15 @@ Parameters are sent via a query string:
 }
 ```
 
-Consult the [API call list](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_Calls_list) for parameter information.
-
-
 ## Access Control
 
 ### .setWalletPassphrase(passphrase);
 
 If you have encrypted your wallet.dat you need to set the passphrase before attaching the middleware.
 ```javascript
-bitcoinapi.setWalletDetails(wallet);
-bitcoinapi.setWalletPassphrase(passphrase);
-app.use('/bitcoin/api', bitcoinapi.app);
+chaincoinapi.setWalletDetails(wallet);
+chaincoinapi.setWalletPassphrase(passphrase);
+app.use('/chaincoin/api', chaincoinapi.app);
 ```
 
 ### .setAccces(type, accesslist);
@@ -127,7 +126,7 @@ The 'only' type only exposes the methods given by an array of methods as the acc
 
 ```javascript
 //Only allow the getinfo method
-bitcoinapi.setAccess('only', ['getinfo']);
+chaincoinapi.setAccess('only', ['getinfo']);
 ```
 
 #### 'restrict'
@@ -135,19 +134,19 @@ bitcoinapi.setAccess('only', ['getinfo']);
 The 'restrict' type prevents methods from being accessed.
 
 ```javascript
-bitcoinapi.setAccess('restrict', ['dumpprivkey', 'sendmany']);
+chaincoinapi.setAccess('restrict', ['dumpprivkey', 'sendmany']);
 ```
 
 ### Access Profiles
 
-Bitcoin-Node-Api has predefined access profiles to make it easy to set up.
+chaincoin-node-api has predefined access profiles to make it easy to set up.
 
 #### 'default-safe'
 
 It prevents 'dumpprivkey' and 'walletpassphrasechange' being accessed. This prevents potential theft. Also removes the 'stop' command to prevent someone from stopping the server.
 
 ```javascript
-bitcoinapi.setAccess('default-safe');
+chaincoinapi.setAccess('default-safe');
 ```
 
 #### 'read-only'
@@ -155,19 +154,19 @@ bitcoinapi.setAccess('default-safe');
 This profile only exposes methods that show information. No methods that can send/alter the wallet are exposed.
 
 ```javascript
-bitcoinapi.setAccess('read-only');
+chaincoinapi.setAccess('read-only');
 ```
 
 ## Projects
 
-Bitcoin-Node-Api is used in the following projects:
+chaincoin-node-api is used in the following projects:
 
-* [Min.io](http://min.io)
+* [Ciquidus Alpha](https://explorer.chaincoin.org)
 
-If you use Bitcoin-Node-Api in your projects submit a pull request to the readme with a link or send me an email: niel@delarouviere.com
 
 # Licence
 
+Copyright (C) 2017 The Chaincoin Community
 Copyright (C) 2013 Niel de la Rouviere
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
