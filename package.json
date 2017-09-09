@@ -2,7 +2,7 @@
   "name": "chaincoin-node-api",
 	"author": "Niel de la Rouviere",
 	"description": "chaincoin-node-api is an Express middleware plugin that exposes URLs for quick development and interfacing with a chaincoind chaincoin wallet.",
-  "version": "1.0.0",
+  "version": "1.0.1",
 	"main": "lib/api.js",
 	"repository" : {
 		"type": "git",
@@ -11,7 +11,7 @@
 
 	"dependencies":{
 		"express": "3.3.x",
-		"node-chaincoin": "1.0.2"
+		"node-chaincoin": "1.0.3"
 	},
 
 	"keywords": [
