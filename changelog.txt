@@ -1,3 +1,5 @@
 v0.1.0 - First commit
 v0.1.1 - Small changes to sending json, added 'read-only' profile.
 v1.0.0 - updated to work with node-chaincoin
+v1.0.2 - added ability to request masternode list and votes
+v1.0.3 - quick compatibility for new 0.16x masternode count
